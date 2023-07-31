@@ -77,7 +77,6 @@ def parser_error(errmsg):
     print("Error: %s" % errmsg)
     sys.exit()
 
-
 def parser_input(input):
     '''
     Parse Input
@@ -114,7 +113,6 @@ def parser_input(input):
     return [path if os.path.exists(input) else parser_error("file could not \
 be found (maybe you forgot to add http/https).")]
 
-
 def send_request(url):
     '''
     Send requests with Requests
@@ -130,11 +128,9 @@ def send_request(url):
     q.add_header('Cookie', args.cookies)
 
     try:
-        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-        response = urlopen(q, timeout=args.timeout, context=sslcontext)
+        response = urlopen(q, timeout=args.timeout)
     except:
-        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-        response = urlopen(q, timeout=args.timeout, context=sslcontext)
+        response = urlopen(q, timeout=args.timeout)
 
     if response.info().get('Content-Encoding') == 'gzip':
         data = GzipFile(fileobj=readBytesCustom(response.read())).read()
